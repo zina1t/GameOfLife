@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define WIDTH 80
-#define HEIGHT 25
+#define WIDE 80
+#define HIGH 25
 #define DELAY_MS 1
 void delay(int milliseconds) {
     long pause;
@@ -38,8 +38,8 @@ int **make2DArray(int cols, int rows) {
 }
 
 /*void setup(int ***grid, int *cols, int *rows) {
-    *cols = WIDTH;
-    *rows = HEIGHT;
+    *cols = WIDE;
+    *rows = HIGH;
     *grid = make2DArray(*cols, *rows);
     srand(time(NULL));
     for (int i = 0; i < *cols; i++) {
@@ -49,17 +49,34 @@ int **make2DArray(int cols, int rows) {
     }
 }*/
 
-void frog(int ***grid, int *cols, int *rows) {
-    *cols = WIDTH;
-    *rows = HEIGHT;
+void glider(int ***grid, int *cols, int *rows) {
+    *cols = WIDE;
+    *rows = HIGH;
     *grid = make2DArray(*cols, *rows);
     for (int i = 0; i < *cols; i++) {
         for (int j = 0; j < *rows; j++) {
-            if ((i == 0 && j == 1) || (i == 1 && j == 2) || (i == 2 && (j == 0 || j == 1 || j == 2)))
+            if ((i == 0 && j == 1) || (i == 1 && j == 2) || (i == 2 && (j == 0 || j == 1 || j == 2)))  // ПЕРЕПИСАТЬ ОТНОСИТЕЛЬНО СЕРЕДИНЫ 
             (*grid)[i][j] = 1;
         }
     }
 }
+
+void acorn(int ***grid, int *cols, int *rows) {
+    *cols = WIDE;
+    *rows = HIGH;
+    int mid_wide = WIDE / 2;
+    int mid_high = HIGH / 2;
+    *grid = make2DArray(*cols, *rows);
+    for (int i = mid_wide; i < *cols; i++) {
+        for (int j = mid_high; j < *rows; j++) {
+            if ((i == mid_wide && j == mid_high + 1) || (i == mid_wide + 1 && j == mid_high + 3) || (i == mid_wide + 2 && (j == mid_high || j == mid_high + 1 || j == mid_high + 4 || j == mid_high + 5 || j == mid_high + 6)))
+            (*grid)[i][j] = 1;
+        }
+    }
+}
+
+
+
 
 
 void draw(int **grid, int cols, int rows) {
@@ -91,7 +108,7 @@ void computeNext(int **grid, int **next, int cols, int rows) {
     }
 }
 
-void clear1() {
+void clear() {
   for (int i = 0; i <= 155; i++) {
     printf("\n");
   }
@@ -101,11 +118,11 @@ void clear1() {
 int main() {
     int **grid;
     int cols, rows;
-    frog(&grid, &cols, &rows);
+    acorn(&grid, &cols, &rows);
 
     while (1) {
         draw(grid, cols, rows);
-        delay(1000);
+        delay(1200);
         clear();
         int **next = make2DArray(cols, rows);
         computeNext(grid, next, cols, rows);
