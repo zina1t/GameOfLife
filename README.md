@@ -12,7 +12,7 @@ The universe of the Game of Life is an infinite, two-dimensional orthogonal grid
 
 4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
-## Graphics
+##    Graphics
 
 Treat the playing field - a rectangle of 80 by 25 cells – as a matrix of the state of the "game".
 It is assumed that the field is "closed to itself", for example, in the lower right square, the neighbor on the right is the lower left square, and the neighbor on the bottom is the upper right.
